@@ -13,7 +13,7 @@ namespace EngageSpeakers
         {
             InitializeComponent();
 
-            MainPage = new EngageSpeakers.MainPage();
+            MainPage = new NavigationPage( new SpeakersPage());
         }
 
         protected override void OnStart()

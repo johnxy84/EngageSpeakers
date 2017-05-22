@@ -28,6 +28,7 @@ namespace EngageSpeakers
              ObservableCollection<Speaker> speakers= new ObservableCollection<Speaker>();
             try
             {
+                Loader.IsVisible = true;
                 Loader.IsEnabled = true;
                 Loader.IsRunning = true;
 
@@ -45,13 +46,13 @@ namespace EngageSpeakers
             }
             finally
             {
+                Loader.IsVisible = false;
                 Loader.IsEnabled = false;
                 Loader.IsRunning = false;
             }
 
             return speakers;
         }
-
 
         private async void SpeakersList_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

@@ -15,8 +15,6 @@ namespace EngageSpeakers
         public MobileServiceClient Client { get; set; } = null;
         IMobileServiceSyncTable<Speaker> table;
 
-
-
         public async Task<IEnumerable<Speaker>> GetSpeakers()
         {
             await Initialize();

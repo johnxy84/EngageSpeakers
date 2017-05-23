@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
 namespace EngageSpeakers
@@ -19,21 +18,20 @@ namespace EngageSpeakers
 
         private async void SyncbuttonCLicked(object sender, EventArgs e)
         {
-            ObservableCollection<Speaker> speakers = await GetSpeakers();
+            ObservableCollection<Faci> speakers = await GetSpeakers();
             SpeakersList.ItemsSource = speakers;
         }
 
-        async Task<ObservableCollection<Speaker>> GetSpeakers()
+        async Task<ObservableCollection<Faci>> GetSpeakers()
         {
-             ObservableCollection<Speaker> speakers= new ObservableCollection<Speaker>();
+            ObservableCollection<Faci> speakers = new ObservableCollection<Faci>();
             try
             {
                 Loader.IsVisible = true;
-                Loader.IsEnabled = true;
                 Loader.IsRunning = true;
 
                 var service = new AzureService();
-                var items = await service.GetSpeakers();
+                var items = await service.GetFacis();
 
                 speakers.Clear();
                 foreach (var item in items)
@@ -47,7 +45,6 @@ namespace EngageSpeakers
             finally
             {
                 Loader.IsVisible = false;
-                Loader.IsEnabled = false;
                 Loader.IsRunning = false;
             }
 
@@ -56,12 +53,17 @@ namespace EngageSpeakers
 
         private async void SpeakersList_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var speaker = e.SelectedItem as Speaker;
-            if (speaker == null)
+            var faci = e.SelectedItem as Faci;
+            if (faci == null)
                 return;
 
-            await Navigation.PushAsync(new DetailsPage(speaker));
+            await Navigation.PushAsync(new DetailsPage(faci));
             SpeakersList.SelectedItem = null;
+        }
+
+        private async void MenuItem_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AddFaciPage(new Faci()));
         }
     }
 }

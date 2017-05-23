@@ -10,8 +10,8 @@ namespace EngageSpeakers
 {
     public partial class DetailsPage : ContentPage
     {
-        private Speaker speaker;
-        public DetailsPage(Speaker item)
+        private Faci speaker;
+        public DetailsPage(Faci item)
         {
             InitializeComponent();
             speaker = item;

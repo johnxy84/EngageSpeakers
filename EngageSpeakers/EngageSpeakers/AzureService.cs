@@ -13,22 +13,15 @@ namespace EngageSpeakers
     {
 
         public MobileServiceClient Client { get; set; } = null;
-        IMobileServiceSyncTable<Speaker> table;
+        IMobileServiceSyncTable<Faci> table;
 
-        public async Task<IEnumerable<Speaker>> GetSpeakers()
-        {
-            await Initialize();
-            await SyncSpeakers();
-            return await table.OrderBy(s => s.Name).ToEnumerableAsync();
-
-        }
-
+       
         public async Task Initialize()
         {
             if (Client?.SyncContext?.IsInitialized ?? false)
                 return;
 
-            var appUrl = "https://montemagnospeakers.azurewebsites.net";
+            var appUrl = "http://engagespeakers.azurewebsites.net";
 
             //Create our client
             Client = new MobileServiceClient(appUrl);
@@ -42,13 +35,14 @@ namespace EngageSpeakers
             var store = new MobileServiceSQLiteStore(path);
 
             //Define table
-            store.DefineTable<Speaker>();
+            store.DefineTable<Faci>();
 
             //Initialize SyncContext
             await Client.SyncContext.InitializeAsync(store, new MobileServiceSyncHandler());
 
             //Get our sync table that will call out to azure
-            table = Client.GetSyncTable<Speaker>();
+            table = Client.GetSyncTable<Faci>();
+
         }
 
         public async Task SyncSpeakers()
@@ -63,6 +57,23 @@ namespace EngageSpeakers
                 Debug.WriteLine("Unable to sync speakers, that is alright as we have offline capabilities: " + ex);
             }
 
+        }
+
+        //Get The list of Facilitators
+        public async Task<IEnumerable<Faci>> GetFacis()
+        {
+            await Initialize();
+            await SyncSpeakers();
+            return await table.OrderBy(s => s.Name).ToEnumerableAsync();
+
+        }
+
+        //Add a new Facilitator
+        public async Task AddFaci(Faci faci)
+        {
+            await Initialize();
+            await SyncSpeakers();
+            await table.InsertAsync(faci);
         }
     }
 }

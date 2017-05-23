@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngageSpeakers.AddFaciPage"
+             Title="Add Faci">
+
+    <StackLayout VerticalOptions="FillAndExpand">
+        <Entry Placeholder="Faci Name..." Text="{Binding Name}" />
+        <Entry Placeholder="Faci Title..." Text="{Binding Title}" />
+        <Entry Placeholder="Faci Description..." Text="{Binding Description}" />
+        <Button Text="Add Faci" Clicked="Button_OnClicked" VerticalOptions="End" />
+        <ActivityIndicator x:Name="Loader" IsVisible="False" />
+
+    </StackLayout>
+</ContentPage>
